@@ -1,8 +1,29 @@
 # Author: Botezat Roman
+
 # Topic:
 Practical use of behavioral design patterns.
 # Domain:
 Artificial intelligence and neural networks.
+
+# LAB3:
+# Iterator
+layer_iterator.h LayerIterator class, used for the functionality of traversing the neural network layers without exposing its structure.
+
+![image](https://user-images.githubusercontent.com/53918731/145062058-e08d04b8-0173-4a67-a1f9-d864acddf195.png)
+
+Because i used the C++ language, which already has syntax for iterators, i just wrote the LayerIterator as a custom iterator for the Network class, which means that i can use C++ iterator specific syntax:
+
+![image](https://user-images.githubusercontent.com/53918731/145062102-fc2e6855-280c-4fd7-850a-4e26c5dcabbf.png)
+
+Usage of the LayerIterator within the Network class
+
+![image](https://user-images.githubusercontent.com/53918731/145062656-ad2948b9-8046-41dd-bb63-f0be9e2ec6ca.png)
+
+# Motivation:
+Because of the non-linear nature of the neural network implementation of layers, no layer has a direct connection to the next layer, which means that if we need to traverse layers, we need to query one of the nodes inside the layer, to get the next layer. This iterator does this for us, and using the begin and end function, we can traverse all the layers in all neural networks with ease.
+
+# Conclussion:
+Using the Iterator design pattern we have a way to access all the layers of the neural network with ease, in the case i used, i only printed the weights of the neurons, but because i have a pointer to those neurons, i can virtually do anything with them, where previously i couldn't.
 
 # LAB2:
 # Decorator:
@@ -70,24 +91,3 @@ Usage: Call the same function with the same arguments for multiple neurons in a 
 3. Easy copying of neurons and links, thanks to the prototype pattern.
 
 ![image](https://user-images.githubusercontent.com/53918731/135220009-3c8316ed-2471-43a6-80c7-18380c6cacaf.png)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -3,6 +3,7 @@
 #include "neuron.h"
 #include <list>
 #include "neuron_builder.h"
+#include "layer_iterator.h"
 
 struct Network {
 	vector<IObject *> output_vector;
@@ -52,5 +53,9 @@ struct Network {
 		for (auto object: input_vector) { (object->on_send()); }
 		return ret;
 	}
+
+	LayerIterator begin() { return {&this->input_vector}; }
+
+	LayerIterator end() { return {}; }
 
 };

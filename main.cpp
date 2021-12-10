@@ -46,5 +46,16 @@ int main() {
 
 	printf("\nPrinting the layers |Weight Bias|\n");
 	n.print_all_layers();
+
+
+	printf("Print the layers with iterator:\n");
+	for (auto layer: n) {
+		for (auto neurons_obj: layer) {
+			printf("%f ", ((Neuron *) neurons_obj)->weight);
+		}
+		printf("\n");
+	}
+
+
 	return 0;
 }
