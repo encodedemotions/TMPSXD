@@ -1,18 +1,20 @@
 #pragma once
-#define RANDF ((float) rand()) / (float) RAND_MAX
+
 #include <random>
-#include "object.h"
+#include "iobject.h"
 #include "link.h"
-#include "builder.h"
-struct Neuron :public IObject {
+
+struct Neuron : public IObject {
 	float weight;
 	float bias;
 	float result;
 	Link link;
 
 	Neuron() {
-		weight = RANDF;
-		bias = 0;
+		static std::default_random_engine e;
+		static std::uniform_real_distribution<> dis(0, 1);
+		weight = dis(e);
+		bias = dis(e) - 0.5f;
 		result = 0;
 	}
 
@@ -28,38 +30,18 @@ struct Neuron :public IObject {
 	}
 
 	virtual Data on_send() override {
-		Data ret = Data{ (result) };
+		Data ret = Data{(result)};
 		result = 0;
 		return ret;
 	};
+
 	virtual void on_receive(Data data) override {
 		result += data.value * weight + bias;
 		link.on_receive({(result)});
 	};
 
-	virtual IObject* clone() override{
+	virtual IObject *clone() override {
 		return new Neuron(weight, bias, link);
 	}
 };
 
-
-struct NeuronBuilder : public IBuilder {
-
-	Link link;
-
-	NeuronBuilder() {}
-
-	void add_link(IObject* object) {
-		link.obj_list.push_back(object);
-	}
-	//void remove_link(IObject* object) { //vector has no remove method, use list
-	//	link.obj_list.remove(object);
-	//}
-	void reset_link() {
-		link.obj_list.clear();
-	}
-
-	virtual IObject* build() override {
-		return new Neuron(link);
-	};
-};
